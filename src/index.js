@@ -39,10 +39,11 @@ async function getGeoInfo(input) {
         const getCoordinates = await fetch('http://api.openweathermap.org/geo/1.0/direct?q=' +input+ '&limit=5&appid=680265e3e07eb5d8401e3eef55579493', {mode: 'cors'})
         const geoData = await getCoordinates.json()
     
-        const state = geoData[0].state;
+        const country = geoData[0].country;
         const longitude = geoData[0].lon;
         const latitude = geoData[0].lat;
         console.log(geoData)
+        
     
     
         const getWeather = await fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '&appid=680265e3e07eb5d8401e3eef55579493', {mode: 'cors'})
@@ -50,7 +51,7 @@ async function getGeoInfo(input) {
         console.log(weatherData)
     
         const weatherInfo = {
-            name: `${geoData[0].name}, ${state}`,
+            name: `${geoData[0].name}, ${country}`,
             temp: `${Math.round(9/5 * (weatherData.main.temp-273) + 32) * 10 /10} °F`,
             feelsLike: `Feels like: ${Math.round(9/5 * (weatherData.main.feels_like-273) + 32) * 10 /10} °F`,
             mainWeather: weatherData.weather[0].main,
@@ -79,6 +80,8 @@ function displayWeatherInfo(weatherInfo) {
     const locationHumidity = document.querySelector('#locationHumidity');
     const locationWind = document.querySelector('#locationWind');
 
+    console.log(weatherInfo.name.state)
+
     locationName.textContent = weatherInfo.name;
     locationTemp.textContent = weatherInfo.temp;
     locationFeel.textContent = weatherInfo.feelsLike
@@ -87,6 +90,4 @@ function displayWeatherInfo(weatherInfo) {
     locationWind.textContent = weatherInfo.windSpeed;
 
 
-
-    console.log(weatherInfo.name)
 }
