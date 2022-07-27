@@ -36,7 +36,7 @@ function validateForm(e) {
 async function getGeoInfo(input) {
 
     try {
-        const getCoordinates = await fetch('http://api.openweathermap.org/geo/1.0/direct?q=' +input+ '&limit=5&appid=680265e3e07eb5d8401e3eef55579493', {mode: 'cors'})
+        const getCoordinates = await fetch('https://api.openweathermap.org/geo/1.0/direct?q=' +input+ '&limit=5&appid=680265e3e07eb5d8401e3eef55579493', {mode: 'cors'})
         const geoData = await getCoordinates.json()
     
         const country = geoData[0].country;
